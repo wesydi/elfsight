@@ -1,0 +1,31 @@
+.menu {
+    position: fixed;
+    width: 15%;
+    height: 100%;
+    background-color: #24292e;
+}
+.menu__list {
+    display: flex;
+    margin-left: 30px;
+    margin-top: 30px;
+    ul {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+        list-style-type: none;
+        li {
+            margin-bottom: 15px;
+            a {
+                font-size: 25px;
+                color: white;
+                text-decoration: none;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
