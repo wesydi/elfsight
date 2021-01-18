@@ -1,12 +1,20 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+} from 'react-router-dom';
+import Main from './components/Main/Main';
 import Menu from './components/Menu/Menu';
-import './App.scss';
 
 const App = () => (
-  <div className="app">
-    <Menu />
-    <div className="main" />
-  </div>
+  <Router>
+    <Route path="/">
+      <Menu />
+    </Route>
+    <Route path="/albums/:id/photos">
+      <Main />
+    </Route>
+  </Router>
 );
 
 export default App;
