@@ -11,11 +11,15 @@ const Menu = () => {
   const location = useLocation();
 
   useEffect(async () => {
-    if (location.pathname.includes('albums')) setIsAlbum(true);
+    if (location.pathname.includes('albums')) {
+      setIsAlbum(true);
+    } else {
+      setIsAlbum(false);
+    }
     try {
       const path = location.pathname === '/' ? '/users' : location.pathname;
       const response = await axios.get(`${url}${path}`);
-      if (!isAlbum) {
+      if (!location.pathname.includes('photos')) {
         setData(response.data);
       }
     } catch (error) {
@@ -31,7 +35,7 @@ const Menu = () => {
             data ? (
               data.map((el) => (
                 <li key={el.id}>
-                  <NavLink to={isAlbum ? `/albums/${el.id}/photos` : `/users/${el.id}/albums`} replace>{el.name || el.title}</NavLink>
+                  <NavLink to={isAlbum ? `/albums/${el.id}/photos` : `/users/${el.id}/albums`}>{el.name || el.title}</NavLink>
                   <hr />
                 </li>
               ))
