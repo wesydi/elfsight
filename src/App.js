@@ -1,8 +1,16 @@
 import React from 'react';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Route,
+} from 'react-router-dom';
+import Main from './components/Main/Main';
 
 const App = () => (
-  <div className="App" />
+  <Router>
+    <Route path="/">
+      <Main />
+    </Route>
+  </Router>
 );
 
 export default App;
