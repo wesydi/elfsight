@@ -18,12 +18,12 @@
         list-style-type: none;
         li {
             margin-bottom: 15px;
-            a {
+            .menu__link {
                 font-size: 25px;
                 color: white;
                 text-decoration: none;
             }
-            a:hover {
+            .menu__link:hover, .menu__link_active {
                 opacity: 0.5;
             }
         }

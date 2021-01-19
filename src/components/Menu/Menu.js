@@ -35,7 +35,7 @@ const Menu = () => {
             data ? (
               data.map((el) => (
                 <li key={el.id}>
-                  <NavLink to={isAlbum ? `/albums/${el.id}/photos` : `/users/${el.id}/albums`}>{el.name || el.title}</NavLink>
+                  <NavLink activeClassName="menu__link_active" className="menu__link" to={isAlbum ? `/albums/${el.id}/photos` : `/users/${el.id}/albums`}>{el.name || el.title}</NavLink>
                   <hr />
                 </li>
               ))
