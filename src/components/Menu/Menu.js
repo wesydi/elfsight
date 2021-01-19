@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { NavLink, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import galleryActions from '../../actions/galleryActions';
 import './Menu.scss';
 
 const url = 'https://jsonplaceholder.typicode.com';
 
-const Menu = () => {
+const Menu = ({ dispatch }) => {
   const [data, setData] = useState(null);
   const [isAlbum, setIsAlbum] = useState(false);
   const location = useLocation();
@@ -21,6 +24,8 @@ const Menu = () => {
       const response = await axios.get(`${url}${path}`);
       if (!location.pathname.includes('photos')) {
         setData(response.data);
+      } else {
+        galleryActions(dispatch).addPhotos(response.data);
       }
     } catch (error) {
       console.error(error);
@@ -47,4 +52,12 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+Menu.defaultProps = {
+  dispatch: () => {},
+};
+
+Menu.propTypes = {
+  dispatch: PropTypes.func,
+};
+
+export default connect()(Menu);
