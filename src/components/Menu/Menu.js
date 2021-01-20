@@ -43,7 +43,15 @@ const Menu = ({ dispatch }) => {
               data ? (
                 data.map((el) => (
                   <li key={el.id}>
-                    <NavLink activeClassName="menu__link_active" className="menu__link" to={isAlbum ? `/albums/${el.id}/photos` : `/users/${el.id}/albums`}>{el.name || el.title}</NavLink>
+                    <NavLink
+                      onClick={(event) => {
+                        if (event.target.classList.contains('menu__link_active')) event.preventDefault();
+                      }}
+                      activeClassName="menu__link_active"
+                      className="menu__link"
+                      to={isAlbum ? `/albums/${el.id}/photos` : `/users/${el.id}/albums`}
+                    >{el.name || el.title}
+                    </NavLink>
                     <hr />
                   </li>
                 ))

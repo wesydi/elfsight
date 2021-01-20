@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './Gallery.scss';
+import { Link, useLocation } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import galleryActions from '../../actions/galleryActions';
 
@@ -11,13 +12,16 @@ const mapStateToProps = (state) => ({
 
 const Gallery = ({ photos, dispatch }) => {
   const [isLast, setIsLast] = useState(false);
+  const location = useLocation();
 
   useEffect(() => () => {
     galleryActions(dispatch).addPhotos([]);
   }, []);
 
   useEffect(() => {
-    setIsLast(false);
+    if (photos.length > 0) {
+      setIsLast(false);
+    }
   }, [photos]);
 
   return (
@@ -27,9 +31,13 @@ const Gallery = ({ photos, dispatch }) => {
         {
           photos.length > 0 ? photos.map((photo, index) => (
             <li key={photo.id}>
-              <div className="gallery__photo">
-                <img onLoad={() => (index === photos.length - 1 ? setIsLast(true) : null)} src={photo.thumbnailUrl} alt={photo.id} />
-              </div>
+              <Link to={`${location.pathname}/${photo.id}`} className="gallery__photo">
+                <img
+                  onLoad={() => (index === photos.length - 1 ? setIsLast(true) : null)}
+                  src={photo.thumbnailUrl}
+                  alt={photo.id}
+                />
+              </Link>
             </li>
           )) : null
         }
