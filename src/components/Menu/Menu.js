@@ -5,6 +5,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import galleryActions from '../../actions/galleryActions';
 import './Menu.scss';
+import Loader from '../Loader/Loader';
 
 const url = 'https://jsonplaceholder.typicode.com';
 
@@ -34,20 +35,24 @@ const Menu = ({ dispatch }) => {
 
   return (
     <nav className="menu">
-      <div className="menu__list">
-        <ul>
-          {
-            data ? (
-              data.map((el) => (
-                <li key={el.id}>
-                  <NavLink activeClassName="menu__link_active" className="menu__link" to={isAlbum ? `/albums/${el.id}/photos` : `/users/${el.id}/albums`}>{el.name || el.title}</NavLink>
-                  <hr />
-                </li>
-              ))
-            ) : null
-          }
-        </ul>
-      </div>
+      {
+        data ? (
+          <div className="menu__list">
+            <ul>
+              {
+              data ? (
+                data.map((el) => (
+                  <li key={el.id}>
+                    <NavLink activeClassName="menu__link_active" className="menu__link" to={isAlbum ? `/albums/${el.id}/photos` : `/users/${el.id}/albums`}>{el.name || el.title}</NavLink>
+                    <hr />
+                  </li>
+                ))
+              ) : null
+            }
+            </ul>
+          </div>
+        ) : <Loader />
+      }
     </nav>
   );
 };

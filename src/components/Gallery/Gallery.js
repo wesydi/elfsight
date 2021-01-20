@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './Gallery.scss';
+import Loader from '../Loader/Loader';
 import galleryActions from '../../actions/galleryActions';
 
 const mapStateToProps = (state) => ({
@@ -21,6 +22,7 @@ const Gallery = ({ photos, dispatch }) => {
 
   return (
     <div className="gallery">
+      {!isLast ? <Loader /> : null}
       <ul className={`gallery__list ${!isLast ? 'gallery__list_empty' : null}`}>
         {
           photos.length > 0 ? photos.map((photo, index) => (
