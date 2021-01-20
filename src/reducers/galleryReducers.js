@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
   photos: {},
+  currentAlbumId: 0,
 };
 
 const galleryReducers = (state = INITIAL_STATE, action) => {
@@ -8,6 +9,7 @@ const galleryReducers = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         photos: action.photos,
+        currentAlbumId: action.photos[0] ? action.photos[0].albumId : 0,
       };
     default:
       return state;

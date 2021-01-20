@@ -16,9 +16,6 @@ const Menu = ({ data, isAlbum }) => (
                 data.map((el) => (
                   <li key={el.id}>
                     <NavLink
-                      onClick={(event) => {
-                        if (event.target.classList.contains('menu__link_active')) event.preventDefault();
-                      }}
                       activeClassName="menu__link_active"
                       className="menu__link"
                       to={isAlbum ? `/albums/${el.id}/photos` : `/users/${el.id}/albums`}

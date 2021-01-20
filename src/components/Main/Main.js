@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import Menu from '../Menu/Menu';
 import Gallery from '../Gallery/Gallery';
 import galleryActions from '../../actions/galleryActions';
+import Lightbox from '../Lightbox/Lightbox';
 
 const url = 'https://jsonplaceholder.typicode.com';
 
@@ -19,6 +20,7 @@ const Main = ({ dispatch }) => {
   const location = useLocation();
 
   useEffect(async () => {
+    if (location.pathname.includes('fullscreen')) return;
     if (location.pathname.includes('albums')) {
       setIsAlbum(true);
     } else {
@@ -42,6 +44,9 @@ const Main = ({ dispatch }) => {
       <Menu data={data} isAlbum={isAlbum} />
       <Route path="/albums/:id/photos">
         <Gallery />
+      </Route>
+      <Route path="/albums/:id/photos/fullscreen/:id">
+        <Lightbox />
       </Route>
     </div>
   );

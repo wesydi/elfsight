@@ -4,25 +4,21 @@ import PropTypes from 'prop-types';
 import './Gallery.scss';
 import { Link, useLocation } from 'react-router-dom';
 import Loader from '../Loader/Loader';
-import galleryActions from '../../actions/galleryActions';
 
 const mapStateToProps = (state) => ({
   photos: state.photos,
+  currentAlbumId: state.currentAlbumId,
 });
 
-const Gallery = ({ photos, dispatch }) => {
+const Gallery = ({
+  photos, currentAlbumId,
+}) => {
   const [isLast, setIsLast] = useState(false);
   const location = useLocation();
 
-  useEffect(() => () => {
-    galleryActions(dispatch).addPhotos([]);
-  }, []);
-
   useEffect(() => {
-    if (photos.length > 0) {
-      setIsLast(false);
-    }
-  }, [photos]);
+    setIsLast(false);
+  }, [currentAlbumId]);
 
   return (
     <div className="gallery">
@@ -31,7 +27,7 @@ const Gallery = ({ photos, dispatch }) => {
         {
           photos.length > 0 ? photos.map((photo, index) => (
             <li key={photo.id}>
-              <Link to={`${location.pathname}/${photo.id}`} className="gallery__photo">
+              <Link to={`${location.pathname}/fullscreen/${photo.id}`} className="gallery__photo">
                 <img
                   onLoad={() => (index === photos.length - 1 ? setIsLast(true) : null)}
                   src={photo.thumbnailUrl}
@@ -48,12 +44,12 @@ const Gallery = ({ photos, dispatch }) => {
 
 Gallery.defaultProps = {
   photos: [],
-  dispatch: () => {},
+  currentAlbumId: 0,
 };
 
 Gallery.propTypes = {
   photos: PropTypes.oneOfType(PropTypes.array, PropTypes.object),
-  dispatch: PropTypes.func,
+  currentAlbumId: PropTypes.number,
 };
 
 export default connect(mapStateToProps)(Gallery);
