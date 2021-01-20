@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/elfsight/static/css/main.59a0385a.chunk.css",
+    "main.js": "/elfsight/static/js/main.9ac50302.chunk.js",
+    "main.js.map": "/elfsight/static/js/main.9ac50302.chunk.js.map",
+    "runtime-main.js": "/elfsight/static/js/runtime-main.a2e64a7f.js",
+    "runtime-main.js.map": "/elfsight/static/js/runtime-main.a2e64a7f.js.map",
+    "static/css/2.679831fc.chunk.css": "/elfsight/static/css/2.679831fc.chunk.css",
+    "static/js/2.f68e81d1.chunk.js": "/elfsight/static/js/2.f68e81d1.chunk.js",
+    "static/js/2.f68e81d1.chunk.js.map": "/elfsight/static/js/2.f68e81d1.chunk.js.map",
+    "index.html": "/elfsight/index.html",
+    "static/css/2.679831fc.chunk.css.map": "/elfsight/static/css/2.679831fc.chunk.css.map",
+    "static/css/main.59a0385a.chunk.css.map": "/elfsight/static/css/main.59a0385a.chunk.css.map",
+    "static/js/2.f68e81d1.chunk.js.LICENSE.txt": "/elfsight/static/js/2.f68e81d1.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a2e64a7f.js",
+    "static/css/2.679831fc.chunk.css",
+    "static/js/2.f68e81d1.chunk.js",
+    "static/css/main.59a0385a.chunk.css",
+    "static/js/main.9ac50302.chunk.js"
+  ]
+}
