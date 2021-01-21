@@ -10,35 +10,51 @@
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, .6);
-  .lightbox__buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+}
+.lightbox__content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lightbox__buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lightbox__button {
+  position: absolute;
+  text-decoration: none;
+  font-size: 60px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  color: white;
+  margin: 30px;
+  &:hover, &:disabled {
+    opacity: 0.5;
+  }
+  &_close {
+    right: 0;
+    top: 0;
+  }
+  &_next {
+    right: 0;
+  }
+  &_prev {
+    left: 0;
+  }
+}
+@media screen and (max-width: 768px) {
+  .lightbox__content img {
+    width: 70%;
   }
   .lightbox__button {
-    position: absolute;
-    text-decoration: none;
-    font-size: 60px;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
-    color: white;
-    margin: 30px;
-    &:hover, &:disabled {
-      opacity: 0.5;
-    }
-    &_close {
-      right: 0;
-      top: 0;
-    }
-    &_next {
-      right: 0;
-    }
-    &_prev {
-      left: 0;
-    }
+    margin: 0;
+  }
+  .lightbox__button_close {
+    margin-top: 60px;
   }
 }

@@ -1,39 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { NavLink, useLocation, Link } from 'react-router-dom';
 import './Menu.scss';
 import Loader from '../Loader/Loader';
+import BurgerMenu from '../BurgerMenu/BurgerMenu';
 
 const Menu = ({ data, isAlbum }) => {
   const location = useLocation();
+  const [widthWindow, setWidthWindow] = useState(window.innerWidth);
+  const [isOpenBurger, setIsOpenBurger] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setWidthWindow(window.innerWidth);
+    });
+  }, []);
+
+  const handleClick = (stateBurger) => {
+    setIsOpenBurger(stateBurger);
+  };
+
+  const renderList = () => (data.length > 0 ? (
+    <>
+      { isAlbum ? <Link to="/users" className="menu__button">←</Link> : null }
+      <div className="menu__list">
+        <ul>
+          {
+          data.map((el) => (
+            <li key={el.id}>
+              {isAlbum ? <img className="menu__cover" src={el.cover} alt="Cover of album" /> : null}
+              <NavLink
+                onClick={() => (isOpenBurger && isAlbum ? setIsOpenBurger(false) : null)}
+                activeClassName="menu__link_active"
+                className="menu__link"
+                to={isAlbum ? `/users/${location.pathname.split('/')[2]}/albums/${el.id}/photos` : `/users/${el.id}/albums`}
+              >{el.name || `${el.title} (${el.length})`}
+              </NavLink>
+              <hr />
+            </li>
+          ))
+        }
+        </ul>
+      </div>
+    </>
+  ) : <Loader />);
 
   return (
-    <nav className="menu">
+    <nav className={`menu ${isOpenBurger ? 'menu_full' : null}`}>
       {
-        isAlbum ? <Link to="/users" className="menu__button">←</Link> : null
+        widthWindow <= 768 ? <BurgerMenu isOpen={isOpenBurger} handleClick={handleClick} /> : null
       }
       {
-        data.length > 0 ? (
-          <div className="menu__list">
-            <ul>
-              {
-                data.map((el) => (
-                  <li key={el.id}>
-                    {isAlbum ? <img className="menu__cover" src={el.cover} alt="Cover of album" /> : null}
-                    <NavLink
-                      activeClassName="menu__link_active"
-                      className="menu__link"
-                      to={isAlbum ? `/users/${location.pathname.split('/')[2]}/albums/${el.id}/photos` : `/users/${el.id}/albums`}
-                    >{el.name || `${el.title} (${el.length})`}
-                    </NavLink>
-                    <hr />
-                  </li>
-                ))
-            }
-            </ul>
-          </div>
-        ) : <Loader />
+        widthWindow > 768 || isOpenBurger ? renderList() : null
       }
     </nav>
   );
