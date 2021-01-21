@@ -7,8 +7,22 @@
     background-color: #24292e;
     overflow-y: auto;
 }
+.menu__button {
+    position: absolute;
+    text-decoration: none;
+    font-size: 60px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    color: white;
+    left: 0;
+    top: -15px;
+}
 .menu__list {
-    margin: 30px;
+    margin: 65px 30px 30px 30px;
     ul {
         width: 100%;
         padding: 0;
