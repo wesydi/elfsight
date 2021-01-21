@@ -15,23 +15,32 @@ import Lightbox from '../Lightbox/Lightbox';
 const url = 'https://jsonplaceholder.typicode.com';
 
 const Main = ({ dispatch }) => {
-  const [data, setData] = useState(null);
+  const [dataMenu, setDataMenu] = useState([]);
   const [isAlbum, setIsAlbum] = useState(false);
   const location = useLocation();
+  const splitLocation = location.pathname.split('/');
 
   useEffect(async () => {
-    if (location.pathname.includes('fullscreen')) return;
     if (location.pathname.includes('albums')) {
       setIsAlbum(true);
     } else {
       setIsAlbum(false);
     }
     try {
-      const path = location.pathname === '/' ? '/users' : location.pathname;
-      const response = await axios.get(`${url}${path}`);
-      if (!location.pathname.includes('photos')) {
-        setData(response.data);
-      } else {
+      if (location.pathname === '/' || location.pathname === '/users') {
+        const response = await axios.get(`${url}/users`);
+        setDataMenu(response.data);
+      }
+      if (location.pathname.includes('users') && location.pathname.includes('albums')) {
+        const response = await axios.get(`${url}${splitLocation.slice(0, 4).join('/')}`);
+        setDataMenu(response.data);
+      }
+      if (location.pathname.includes('photos') && !location.pathname.includes('fullscreen')) {
+        const response = await axios.get(`${url}/${splitLocation.slice(3).join('/')}`);
+        galleryActions(dispatch).addPhotos(response.data);
+      }
+      if (location.pathname.includes('fullscreen')) {
+        const response = await axios.get(`${url}/${splitLocation.slice(3, 6).join('/')}`);
         galleryActions(dispatch).addPhotos(response.data);
       }
     } catch (error) {
@@ -41,11 +50,11 @@ const Main = ({ dispatch }) => {
 
   return (
     <div className="main">
-      <Menu data={data} isAlbum={isAlbum} />
-      <Route path="/albums/:id/photos">
+      <Menu data={dataMenu} isAlbum={isAlbum} />
+      <Route path="/users/:id/albums/:id/photos">
         <Gallery />
       </Route>
-      <Route path="/albums/:id/photos/fullscreen/:id">
+      <Route path="/users/:id/albums/:id/photos/fullscreen/:id">
         <Lightbox />
       </Route>
     </div>
