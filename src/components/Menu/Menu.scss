@@ -13,6 +13,7 @@
 }
 .menu__button {
     position: absolute;
+    margin-left: 10px;
     text-decoration: none;
     font-size: 60px;
     background-color: transparent;
@@ -24,6 +25,8 @@
     color: white;
     left: 0;
     top: -15px;
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+    user-select: none;
     &:hover {
         opacity: 0.5;
     }
@@ -31,14 +34,15 @@
 .menu__list {
     margin: 65px 30px 30px 30px;
     ul {
-        width: 100%;
         padding: 0;
         margin: 0;
-        display: flex;
-        flex-direction: column;
         list-style-type: none;
         li {
-            margin-bottom: 15px;
+            margin-bottom: 30px;
+            .menu__cover {
+                width: 50px;
+                height: 50px;
+            }
             .menu__link {
                 display: block;
                 font-size: 25px;
@@ -50,16 +54,65 @@
             }
         }
     }
+    &_empty {
+        display: none!important;
+    }
 }
-.menu__cover {
-    width: 50px;
-    height: 50px;
+
+.menu-btn {
+    position: absolute;
+    right: 0;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    width: 40px;
+    height: 60px;
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    user-select: none;
+    &_open {
+        .menu-btn__burger {
+            background: transparent;
+            box-shadow: none;
+        }
+        .menu-btn__burger:before {
+            transform: rotate(45deg);
+        }
+        .menu-btn__burger:after {
+            transform: rotate(-45deg);
+        }
+    }
+}
+.menu-btn__burger {
+    width: 40px;
+    height: 4px;
+    background-color: #fff;
+    border-radius: 5px;
+    transition: all .5s ease-in-out;
+    &:before, &:after {
+        content: '';
+        position: absolute;
+        width: 40px;
+        height: 4px;
+        background: #fff;
+        border-radius: 5px;
+        transition: all .5s ease-in-out;
+    }
+    &:before {
+        transform: translateY(-16px);
+    }
+    &:after {
+        transform: translateY(16px);
+    }
 }
 
 @media screen and (max-width: 768px) {
     .menu {
         width: 100%;
         height: 60px;
+        top: 0;
+        margin-bottom: 20px;
         .menu__list {
             display: block;
         }

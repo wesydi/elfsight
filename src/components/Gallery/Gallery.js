@@ -23,7 +23,7 @@ const Gallery = ({
   return (
     <div className="gallery">
       {!isLast ? <Loader /> : null}
-      <ul className={`gallery__list ${!isLast ? 'gallery__list_empty' : null}`}>
+      <ul className={`gallery__list ${!isLast ? 'gallery__list_empty' : ''}`}>
         {
           photos.length > 0 ? photos.map((photo, index) => (
             <li key={photo.id}>
@@ -49,7 +49,7 @@ Gallery.defaultProps = {
 };
 
 Gallery.propTypes = {
-  photos: PropTypes.oneOfType(PropTypes.array, PropTypes.object),
+  photos: PropTypes.arrayOf(PropTypes.object),
   currentAlbumId: PropTypes.number,
 };
 

@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-  photos: {},
+  photos: [],
   currentAlbumId: 0,
 };
 

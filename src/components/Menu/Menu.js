@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import { NavLink, useLocation, Link } from 'react-router-dom';
 import './Menu.scss';
 import Loader from '../Loader/Loader';
-import BurgerMenu from '../BurgerMenu/BurgerMenu';
 
 const Menu = ({ data, isAlbum }) => {
   const location = useLocation();
   const [widthWindow, setWidthWindow] = useState(window.innerWidth);
   const [isOpenBurger, setIsOpenBurger] = useState(false);
+  const [isPhotosLoaded, setIsPhotosLoaded] = useState(false);
+  const currentUserId = location.pathname.split('/')[2];
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -17,39 +18,55 @@ const Menu = ({ data, isAlbum }) => {
     });
   }, []);
 
-  const handleClick = (stateBurger) => {
-    setIsOpenBurger(stateBurger);
+  useEffect(() => {
+    setIsPhotosLoaded(false);
+  }, [currentUserId]);
+
+  const renderBurgerMenu = () => (
+    <div
+      role="presentation"
+      onClick={() => setIsOpenBurger(!isOpenBurger)}
+      className={`menu-btn ${isOpenBurger ? 'menu-btn_open' : ''}`}
+    >
+      <div className="menu-btn__burger" />
+    </div>
+  );
+
+  const renderList = () => {
+    if (data.length > 0) {
+      return (
+        <>
+          { isAlbum ? <Link to="/users" className="menu__button">←</Link> : null }
+          {isAlbum && !isPhotosLoaded ? <Loader /> : null}
+          <div className={`menu__list ${isAlbum && !isPhotosLoaded ? 'menu__list_empty' : ''}`}>
+            <ul>
+              {
+                data.map((el, index) => (
+                  <li key={el.id}>
+                    {isAlbum ? <img onLoad={() => (index === data.length - 1 ? setIsPhotosLoaded(true) : null)} className="menu__cover" src={el.cover} alt="Cover of album" /> : null}
+                    <NavLink
+                      onClick={() => (isOpenBurger && isAlbum ? setIsOpenBurger(false) : null)}
+                      activeClassName="menu__link_active"
+                      className="menu__link"
+                      to={isAlbum ? `/users/${currentUserId}/albums/${el.id}/photos` : `/users/${el.id}/albums`}
+                    >{el.name || `${el.title} (${el.length})`}
+                    </NavLink>
+                    <hr />
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </>
+      );
+    }
+    return <Loader />;
   };
 
-  const renderList = () => (data.length > 0 ? (
-    <>
-      { isAlbum ? <Link to="/users" className="menu__button">←</Link> : null }
-      <div className="menu__list">
-        <ul>
-          {
-          data.map((el) => (
-            <li key={el.id}>
-              {isAlbum ? <img className="menu__cover" src={el.cover} alt="Cover of album" /> : null}
-              <NavLink
-                onClick={() => (isOpenBurger && isAlbum ? setIsOpenBurger(false) : null)}
-                activeClassName="menu__link_active"
-                className="menu__link"
-                to={isAlbum ? `/users/${location.pathname.split('/')[2]}/albums/${el.id}/photos` : `/users/${el.id}/albums`}
-              >{el.name || `${el.title} (${el.length})`}
-              </NavLink>
-              <hr />
-            </li>
-          ))
-        }
-        </ul>
-      </div>
-    </>
-  ) : <Loader />);
-
   return (
-    <nav className={`menu ${isOpenBurger ? 'menu_full' : null}`}>
+    <nav className={`menu ${isOpenBurger ? 'menu_full' : ''}`}>
       {
-        widthWindow <= 768 ? <BurgerMenu isOpen={isOpenBurger} handleClick={handleClick} /> : null
+        widthWindow <= 768 ? renderBurgerMenu() : null
       }
       {
         widthWindow > 768 || isOpenBurger ? renderList() : null
@@ -64,7 +81,7 @@ Menu.defaultProps = {
 };
 
 Menu.propTypes = {
-  data: PropTypes.oneOfType(PropTypes.array, PropTypes.object),
+  data: PropTypes.arrayOf(PropTypes.object),
   isAlbum: PropTypes.bool,
 };
 

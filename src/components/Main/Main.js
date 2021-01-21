@@ -3,7 +3,7 @@ import {
   Route,
   useLocation,
 } from 'react-router-dom';
-import './Main.css';
+import './Main.scss';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -24,26 +24,24 @@ const Main = ({ dispatch }) => {
     setIsAlbum(location.pathname.includes('albums'));
     try {
       if (location.pathname === '/' || location.pathname === '/users') {
-        const response = await axios.get(`${url}/users`);
-        setDataMenu(response.data);
+        const users = await axios.get(`${url}/users`);
+        setDataMenu(users.data);
       }
       if (location.pathname.includes('users') && location.pathname.includes('albums')) {
-        const response = await axios.get(`${url}${splitLocation.slice(0, 4).join('/')}`);
-        const responseWithPhotos = response.data.map(async (album) => {
+        const pathToAlbums = `${splitLocation.slice(0, 4).join('/')}`;
+        const albums = await axios.get(`${url}${pathToAlbums}`);
+        const filledAlbums = albums.data.map(async (album) => {
           const photos = await axios.get(`${url}/albums/${album.id}/photos`);
           return { ...album, length: photos.data.length, cover: photos.data[0].thumbnailUrl };
         });
-        Promise.all(responseWithPhotos).then((results) => {
+        Promise.all(filledAlbums).then((results) => {
           setDataMenu(results);
         });
       }
-      if (location.pathname.includes('photos') && !location.pathname.includes('fullscreen')) {
-        const response = await axios.get(`${url}/${splitLocation.slice(3).join('/')}`);
-        galleryActions(dispatch).addPhotos(response.data);
-      }
-      if (location.pathname.includes('fullscreen')) {
-        const response = await axios.get(`${url}/${splitLocation.slice(3, 6).join('/')}`);
-        galleryActions(dispatch).addPhotos(response.data);
+      if (location.pathname.includes('photos')) {
+        const pathToPhotos = `${splitLocation.slice(3, 6).join('/')}`;
+        const photos = await axios.get(`${url}/${pathToPhotos}`);
+        galleryActions(dispatch).addPhotos(photos.data);
       }
     } catch (error) {
       console.error(error);
@@ -53,6 +51,11 @@ const Main = ({ dispatch }) => {
   return (
     <div className="main">
       <Menu data={dataMenu} isAlbum={isAlbum} />
+      <Route exact path={['/', '/users', '/users/:id/albums']}>
+        <div className="placeholder">
+          <span>Выберите пункт из меню</span>
+        </div>
+      </Route>
       <Route path="/users/:id/albums/:id/photos">
         <Gallery />
       </Route>
