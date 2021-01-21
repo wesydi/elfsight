@@ -20,6 +20,9 @@
     color: white;
     left: 0;
     top: -15px;
+    &:hover {
+        opacity: 0.5;
+    }
 }
 .menu__list {
     margin: 65px 30px 30px 30px;

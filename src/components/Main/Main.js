@@ -21,11 +21,7 @@ const Main = ({ dispatch }) => {
   const splitLocation = location.pathname.split('/');
 
   useEffect(async () => {
-    if (location.pathname.includes('albums')) {
-      setIsAlbum(true);
-    } else {
-      setIsAlbum(false);
-    }
+    setIsAlbum(location.pathname.includes('albums'));
     try {
       if (location.pathname === '/' || location.pathname === '/users') {
         const response = await axios.get(`${url}/users`);
