@@ -29,7 +29,13 @@ const Main = ({ dispatch }) => {
       }
       if (location.pathname.includes('users') && location.pathname.includes('albums')) {
         const response = await axios.get(`${url}${splitLocation.slice(0, 4).join('/')}`);
-        setDataMenu(response.data);
+        const responseWithPhotos = response.data.map(async (album) => {
+          const photos = await axios.get(`${url}/albums/${album.id}/photos`);
+          return { ...album, length: photos.data.length, cover: photos.data[0].thumbnailUrl };
+        });
+        Promise.all(responseWithPhotos).then((results) => {
+          setDataMenu(results);
+        });
       }
       if (location.pathname.includes('photos') && !location.pathname.includes('fullscreen')) {
         const response = await axios.get(`${url}/${splitLocation.slice(3).join('/')}`);
