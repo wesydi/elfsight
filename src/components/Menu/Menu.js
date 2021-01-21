@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, Link } from 'react-router-dom';
 import './Menu.scss';
 import Loader from '../Loader/Loader';
 
@@ -10,6 +10,9 @@ const Menu = ({ data, isAlbum }) => {
 
   return (
     <nav className="menu">
+      {
+        isAlbum ? <Link to="/users" className="menu__button">←</Link> : null
+      }
       {
         data.length > 0 ? (
           <div className="menu__list">
