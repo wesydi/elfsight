@@ -27,8 +27,9 @@ const Gallery = ({
         {
           photos.length > 0 ? photos.map((photo, index) => (
             <li key={photo.id}>
-              <Link to={`${location.pathname}/fullscreen/${photo.id}`} className="gallery__photo">
+              <Link to={`${location.pathname}/fullscreen/${photo.id}`}>
                 <img
+                  className="gallery__photo"
                   onLoad={() => (index === photos.length - 1 ? setIsLast(true) : null)}
                   src={photo.thumbnailUrl}
                   alt={photo.id}
