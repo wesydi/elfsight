@@ -20,11 +20,12 @@ const Menu = ({ data, isAlbum }) => {
               {
                 data.map((el) => (
                   <li key={el.id}>
+                    {isAlbum ? <img className="menu__cover" src={el.cover} alt="Cover of album" /> : null}
                     <NavLink
                       activeClassName="menu__link_active"
                       className="menu__link"
                       to={isAlbum ? `/users/${location.pathname.split('/')[2]}/albums/${el.id}/photos` : `/users/${el.id}/albums`}
-                    >{el.name || el.title}
+                    >{el.name || `${el.title} (${el.length})`}
                     </NavLink>
                     <hr />
                   </li>

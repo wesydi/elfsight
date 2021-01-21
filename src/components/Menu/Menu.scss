@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     position: fixed;
-    width: 15%;
+    width: 20%;
     height: 100%;
     background-color: #24292e;
     overflow-y: auto;
@@ -33,6 +33,7 @@
         li {
             margin-bottom: 15px;
             .menu__link {
+                display: block;
                 font-size: 25px;
                 color: white;
                 text-decoration: none;
@@ -42,4 +43,8 @@
             }
         }
     }
+}
+.menu__cover {
+    width: 50px;
+    height: 50px;
 }
