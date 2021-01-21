@@ -9,15 +9,20 @@
 .gallery__list {
     padding: 0;
     margin: 0;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 150px);
+    grid-gap: 1rem;
     justify-content: space-between;
-    flex-wrap: wrap;
+    width: 80vw;
     list-style-type: none;
     user-select: none;
     &_empty {
         display: none;
     }
-    .gallery__photo:hover {
+}
+.gallery__photo {
+    width: 150px;
+    &:hover {
         opacity: 0.4;
     }
 }
@@ -30,5 +35,10 @@
         overflow: auto;
         margin-top: 60px;
         padding-top: 20px;
+    }
+}
+@media screen and (max-width: 375px) {
+    .gallery__list {
+        justify-content: center;
     }
 }
