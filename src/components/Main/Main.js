@@ -27,7 +27,7 @@ const Main = ({ dispatch }) => {
         const users = await axios.get(`${url}/users`);
         setDataMenu(users.data);
       }
-      if (location.pathname.includes('users') && location.pathname.includes('albums')) {
+      if (location.pathname.includes('albums')) {
         const pathToAlbums = `${splitLocation.slice(0, 4).join('/')}`;
         const albums = await axios.get(`${url}${pathToAlbums}`);
         const filledAlbums = albums.data.map(async (album) => {
