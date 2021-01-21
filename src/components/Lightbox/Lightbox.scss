@@ -27,8 +27,8 @@
     outline: none;
     color: white;
     margin: 30px;
-    &:hover {
-      opacity: 0.7;
+    &:hover, &:disabled {
+      opacity: 0.5;
     }
     &_close {
       right: 0;

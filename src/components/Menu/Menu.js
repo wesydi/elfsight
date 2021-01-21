@@ -1,37 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import './Menu.scss';
 import Loader from '../Loader/Loader';
 
-const Menu = ({ data, isAlbum }) => (
-  <nav className="menu">
-    {
-        data ? (
+const Menu = ({ data, isAlbum }) => {
+  const location = useLocation();
+
+  return (
+    <nav className="menu">
+      {
+        data.length > 0 ? (
           <div className="menu__list">
             <ul>
               {
-              data ? (
                 data.map((el) => (
                   <li key={el.id}>
                     <NavLink
                       activeClassName="menu__link_active"
                       className="menu__link"
-                      to={isAlbum ? `/albums/${el.id}/photos` : `/users/${el.id}/albums`}
+                      to={isAlbum ? `/users/${location.pathname.split('/')[2]}/albums/${el.id}/photos` : `/users/${el.id}/albums`}
                     >{el.name || el.title}
                     </NavLink>
                     <hr />
                   </li>
                 ))
-              ) : null
             }
             </ul>
           </div>
         ) : <Loader />
       }
-  </nav>
-);
+    </nav>
+  );
+};
 
 Menu.defaultProps = {
   data: [],
